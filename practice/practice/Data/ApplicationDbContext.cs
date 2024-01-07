@@ -41,10 +41,14 @@ namespace practice.Data
                 .HasKey(pc => pc.CategoryId);
 
             // Configure the one-to-many relationship
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.ProductCategories)
-                .WithOne(pc => pc.Product) 
-                .HasForeignKey(pc => pc.ProductId);
+            // modelBuilder.Entity<Product>()
+            //     .HasMany(p => p.ProductCategories)
+            //     .WithOne(pc => pc.Product)
+            //     .HasForeignKey(pc => pc.CategoryId);
+            // modelBuilder.Entity<Product>()
+            // .HasMany(p => p.ProductCategories)
+            // .WithOne()
+            // .HasForeignKey(r => r.CategoryId);
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,13 +62,38 @@ namespace practice.Controllers
         }*/
 
         [HttpPost("create-product")]
-        public ActionResult<Product> CreateProduct(Product product)
+        public async Task<ActionResult<string>> CreateProduct([FromBody] Product product)
+        {
+            try
+            {
+                var entity = new Product
+                {
+                    //ProductId = product.ProductId, // Uncomment this line if needed
+                    ProductName = product.ProductName,
+                    Cost = product.Cost,
+                    Description = product.Description,
+                    IsActive = product.IsActive,
+                    ProductCategories = product.ProductCategories
+                };
+
+                _dbContext.Products.Add(entity);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok("Product added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error adding product: {ex.Message}");
+            }
+        }
+
+        /*public ActionResult<Product> CreateProduct(Product product)
         {
             _dbContext.Products.Add(product);
             _dbContext.SaveChanges();
 
             return CreatedAtAction(nameof(GetProducts), new { id = product.ProductId }, product);
-        }
+        }*/
 
 
 
